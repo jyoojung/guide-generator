@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>체험단 · 기자단 가이드 자동 생성</title>
+    <meta name="description" content="마케팅 실무자를 위한 체험단/기자단 가이드라인 자동 생성 웹 모듈" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="header-logo">
+                <span class="logo-text">가이드 생성기</span>
+            </div>
+            <nav class="header-nav">
+                <span class="header-nav-item">체험단 · 기자단 가이드라인</span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="main">
+
+        <!-- 입력 폼 -->
+        <div class="card card-form">
+            <div class="card-header">
+                <h2 class="card-title">캠페인 정보</h2>
+                <p class="card-desc">필수 항목을 입력해주세요</p>
+            </div>
+
+            <form id="guideForm" novalidate>
+
+                <div class="field-group">
+                    <label class="field-label" for="brandKeyword">브랜드 키워드 <span class="required-star">*</span></label>
+                    <input type="text" id="brandKeyword" class="field-input" placeholder="예) 런칭그로스" required />
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label" for="mainKeyword">주요 키워드 <span class="required-star">*</span></label>
+                    <input type="text" id="mainKeyword" class="field-input" placeholder="예) 런칭 마케팅" required />
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label" for="subKeyword">서브 키워드 <span class="required-star">*</span></label>
+                    <input type="text" id="subKeyword" class="field-input" placeholder="예) 브랜드 런칭, 브랜드 마케팅" required />
+                    <p class="field-hint">쉼표(,) 또는 슬래시(/)로 여러 키워드 구분</p>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label" for="hashtags">해시태그 <span class="required-star">*</span></label>
+                    <input type="text" id="hashtags" class="field-input" placeholder="예) #런칭그로스, #런칭마케팅" required />
+                    <p class="field-hint"># 포함 또는 미포함 모두 가능, 쉼표로 구분</p>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label" for="exampleImage">예시 이미지</label>
+                    <div class="file-drop-area" id="fileDropArea">
+                        <input type="file" id="exampleImage" class="file-input" accept="image/*" />
+                        <div class="file-drop-content">
+                            <div class="file-drop-icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>
+                            </div>
+                            <p class="file-drop-text" id="fileUploadText">이미지를 드래그하거나 클릭해서 업로드</p>
+                            <p class="file-drop-sub">가이드용 레퍼런스 이미지</p>
+                        </div>
+                    </div>
+                    <div class="file-preview" id="imagePreviewContainer" style="display:none;">
+                        <img id="imagePreview" src="" alt="미리보기" />
+                        <button type="button" class="file-remove" id="imageRemoveBtn">이미지 제거</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="generateBtn">
+                    생성하기
+                </button>
+
+            </form>
+        </div>
+
+        <!-- 결과 출력 -->
+        <div class="card card-result">
+            <div class="card-header">
+                <div class="card-header-row">
+                    <div>
+                        <h2 class="card-title">결과 미리보기</h2>
+                        <p class="card-desc">생성된 가이드라인을 확인하세요</p>
+                    </div>
+                    <button class="btn-copy" id="copyBtn" style="display:none;">복사하기</button>
+                </div>
+            </div>
+
+            <div class="result-area" id="resultArea">
+                <!-- Placeholder -->
+                <div class="result-placeholder" id="outputPlaceholder">
+                    <div class="placeholder-icon">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="16" y1="13" x2="8" y2="13" />
+                            <line x1="16" y1="17" x2="8" y2="17" />
+                            <polyline points="10 9 9 9 8 9" />
+                        </svg>
+                    </div>
+                    <p class="placeholder-title">아직 생성된 가이드가 없어요</p>
+                    <p class="placeholder-desc">왼쪽에서 정보를 입력하고 생성하기를 눌러주세요</p>
+                </div>
+
+                <!-- 결과 -->
+                <div class="result-output" id="outputResult" style="display:none;">
+                    <div class="result-block" id="resultSection1"></div>
+                    <div class="result-block" id="resultSection2a"></div>
+                    <div class="result-image-slot" id="resultImageSlot" style="display:none;"></div>
+                    <div class="result-block" id="resultSection2b"></div>
+                    <div class="result-block" id="resultSection3"></div>
+                    <div class="result-block result-block--caution" id="resultSection4"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">복사되었어요!</div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
