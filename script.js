@@ -33,6 +33,7 @@ const resultSection4 = document.getElementById('resultSection4');
 // State
 // ──────────────────────────────────────────────
 let uploadedImageDataURL = null;
+let isHashtagManuallyEdited = false;
 
 // ──────────────────────────────────────────────
 // Image Upload Handling
@@ -260,8 +261,42 @@ form.addEventListener('submit', (e) => {
 
 // 입력값 변경 시 invalid 클래스 제거
 [brandInput, mainInput, subInput, hashInput].forEach(input => {
-  input.addEventListener('input', () => input.classList.remove('invalid'));
+  input.addEventListener('input', () => {
+    input.classList.remove('invalid');
+    
+    // 해시태그 자동 완성 로직
+    if (input !== hashInput && !isHashtagManuallyEdited) {
+      updateHashtagsAutomatically();
+    }
+  });
 });
+
+// 해시태그 수동 수정 여부 체크
+hashInput.addEventListener('input', () => {
+  isHashtagManuallyEdited = hashInput.value.trim().length > 0;
+});
+
+function updateHashtagsAutomatically() {
+  const brand = brandInput.value.trim();
+  const main = mainInput.value.trim();
+  const subRaw = subInput.value.trim();
+  
+  // 서브 키워드 파싱 (쉼표 또는 슬래시)
+  const subKeywords = subRaw.split(/[,\/]/).map(k => k.trim()).filter(Boolean);
+  
+  const allKeywords = [brand, main, ...subKeywords].filter(Boolean);
+  
+  if (allKeywords.length > 0) {
+    // # 붙여서 생성
+    const autoTags = allKeywords
+      .map(keyword => keyword.startsWith('#') ? keyword : `#${keyword}`)
+      .join(', ');
+    
+    hashInput.value = autoTags;
+  } else {
+    hashInput.value = '';
+  }
+}
 
 // ──────────────────────────────────────────────
 // 클립보드 복사
