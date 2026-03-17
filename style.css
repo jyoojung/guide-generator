@@ -396,8 +396,17 @@ body {
   color: var(--gray-700);
   white-space: pre-wrap;
   word-break: break-word;
-  padding: 22px 24px;
+  padding: 14px 24px;
   border-bottom: 1px solid var(--gray-100);
+}
+
+.result-block ul {
+  padding-left: 1.2em;
+  margin: 0 0 0 1em;
+}
+
+.result-block li {
+  margin: 0;
 }
 
 .result-block:last-child {
@@ -541,4 +550,11 @@ body {
   .hero-title {
     font-size: 1.6rem;
   }
+}
+
+/* ---------- Text Highlight ---------- */
+.text-highlight-red {
+  color: #E93535;
+  text-decoration: underline;
+  font-weight: 700;
 }
